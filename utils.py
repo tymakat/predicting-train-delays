@@ -5,6 +5,9 @@ import matplotlib.pyplot as plt
 def filter_by_column_value(dataset: pd.DataFrame, column: str, value) -> pd.DataFrame:
     return dataset[dataset[column] == value]
 
+def filter_by_column_value_over_under(dataset: pd.DataFrame, column: str, over: bool, value) -> pd.DataFrame:
+    return dataset[dataset[column] > value] if over else dataset[dataset[column] <= value]
+
 def plot_range_pie(df, column, ranges):
     #create a pie chart to visualize different delay ranges in dataset
     #to get an insight about the delays, to later evenly split it for classification.
@@ -49,3 +52,14 @@ def plot_range_pie(df, column, ranges):
 
     # also return it for programmatic use
     return summary_strings
+
+
+def count_nulls(df, col):
+    n = df[col].isna().sum()
+    print(f"Nulls: {n}")
+    return n
+
+def count_nulls_debug(df, col):
+    null_rows = df[df[col].isna()]
+    print(f"Rows with nulls in '{col}': {len(null_rows)}")
+    return null_rows
